@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 构建队列
+      function queue(arr) {
+        var sequence = Promise.resolve();
+        arr.forEach(function(item) {
+          sequence = sequence.then(item);
+        });
+        return sequence;
+      }
+      // 执行队列
+      queue([
+        () => {
+          console.log(1);
+        },
+        () => {
+          console.log(2);
+        },
+        () => {
+          console.log(3);
+        }
+      ]).then(data => {
+        console.log(data); // abc
+      });
+
+      async function queue(arr) {
+        let res = null;
+        for (let promise of arr) {
+          res = await promise(res);
+        }
+        return await res;
+      }
+      queue([
+        () => {
+          console.log(1);
+        },
+        () => {
+          console.log(2);
+        },
+        () => {
+          console.log(3);
+        }
+      ]);
+    </script>
+  </body>
+</html>
