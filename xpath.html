@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+        //e.taerget
+      function domXpath(dom) {
+        var path = "";
+        for (; dom && dom.nodeType === 1; dom = dom.parentNode) {
+          var index = 1;
+          for (var sib = dom.previousSibling; sib; sib = sib.previousSibling) {
+            if (sib.nodeType === 1 && sib.tagName === dom.tagName) {
+              index++;
+            }
+          }
+          var xname = dom.tagName.toLowerCase();
+          if (dom.id) {
+            xname += '[@id="' + dom.id + '"]';
+          } else {
+            if (index > 0) {
+              xname += "[" + index + "]";
+            }
+          }
+          path = "/" + xname + path;
+        }
+
+        path = path.replace("html[1]/body[1]/", "html/body/");
+        console.log(path, 55656);
+        return path;
+      }
+    </script>
+  </body>
+</html>
